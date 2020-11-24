@@ -11,46 +11,6 @@ export class PodcastRoute {
         return this._instance;
     }
 
-    public async getRecent(req: express.Request, res: express.Response){
-
-
-
-        try{
-            let resultats = await PodcastDAO.instance.all();
-            let  voirData:any = [];
-            let filterResults = [];
-
-            
-
-            resultats.forEach((Podcast)=>{
-                voirData.push({
-                    id: Podcast.id,
-                    nomEmission: Podcast.data().nomEmission,
-                    streamUrl: Podcast.data().streamUrl,
-                    duree: Podcast.data().duree,
-                    photo: Podcast.data().photo,
-                    createdAt: moment(Podcast.data().createdAt.toDate()).fromNow()
-                })
-            })
-            if(voirData.length < 2){
-                res.send(voirData);
-            }else{
-
-                            
-                for (let i = 0; i < 2; i++) {
-                    filterResults.push(voirData[i]);
-                    
-                }
-            
-                res.send(filterResults);
-            }
-
-
-        }catch(err){
-            res.status(500).send(err);
-        }
-    }
-
     public async get(req: express.Request, res: express.Response){
 
 
@@ -134,6 +94,87 @@ export class PodcastRoute {
 
         }catch(error){
             res.status(500).send(error);
+        }
+    }
+
+    public async getRecent(req: express.Request, res: express.Response){
+
+
+
+        try{
+            let resultats = await PodcastDAO.instance.all();
+            let  voirData:any = [];
+            let filterResults = [];
+
+            
+
+            resultats.forEach((Podcast)=>{
+                voirData.push({
+                    id: Podcast.id,
+                    nomEmission: Podcast.data().nomEmission,
+                    streamUrl: Podcast.data().streamUrl,
+                    duree: Podcast.data().duree,
+                    photo: Podcast.data().photo,
+                    createdAt: moment(Podcast.data().createdAt.toDate()).fromNow()
+                })
+            })
+            if(voirData.length < 2){
+                res.send(voirData);
+            }else{
+
+                            
+                for (let i = 0; i < 2; i++) {
+                    filterResults.push(voirData[i]);
+                    
+                }
+            
+                res.send(filterResults);
+            }
+
+
+        }catch(err){
+            res.status(500).send(err);
+        }
+    }
+
+    public async getPodcastByEmissionName(req: express.Request, res: express.Response){
+
+        // try{
+        //     const PodcastId: string = req.params.id;
+        //     const Podcast:any = await PodcastDAO.instance.getOne(PodcastId);
+        //     res.send({
+        //         id: Podcast.id(),
+        //         NomEmission: Podcast.NomEmission(),
+        //         StreamUrl: Podcast.StreamUrl(),
+        //         Duree: Podcast.duree(),
+        //         Photo: Podcast.photo()
+        //     });
+
+        // }catch(err){
+        //     res.status(500).send(err);
+        // }
+
+        try{
+            const nameEmission : string = req.params.name;
+            const resultats = await PodcastDAO.instance.all();
+            const voirData:any = [];
+            resultats.forEach((Podcast)=>{
+                voirData.push({
+                    id: Podcast.id,
+                    nomEmission: Podcast.data().nomEmission,
+                    streamUrl: Podcast.data().streamUrl,
+                    duree: Podcast.data().duree,
+                    photo: Podcast.data().photo,
+                    createdAt: moment(Podcast.data().createdAt.toDate()).fromNow()
+                })
+            })
+            const result :any = voirData.filter((data: { nomEmission: string; }) => data.nomEmission === nameEmission);
+            res.send(result)
+
+            
+
+        }catch(err){
+            res.status(500).send(err);
         }
     }
 

@@ -7,7 +7,7 @@ import { PodcastRoute} from '@routes/podcast.route';
 export const router = express.Router();
 
 /**
- * user Routing
+ * podcast Routing
  */ 
 router.get('/podcasts',PodcastRoute.instance.get);
 router.post('/podcasts',PodcastRoute.instance.post);
@@ -15,6 +15,7 @@ router.put('/podcasts/:id',PodcastRoute.instance.update);
 router.delete('/podcasts/:id',PodcastRoute.instance.delete);
 router.get('/podcasts/:id',PodcastRoute.instance.getOne);
 router.get('/podcastsRecents',PodcastRoute.instance.getRecent);
+router.get('/podcastsbyemission/:name',PodcastRoute.instance.getPodcastByEmissionName);
 
 
 /**
