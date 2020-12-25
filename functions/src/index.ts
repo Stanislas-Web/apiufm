@@ -86,6 +86,18 @@ app2.get('**', (req, res) => {
   });
 
 
+  exports.banniereCreatedDate = functions.firestore
+  .document('bannieres/{banniereId}')
+  .onCreate((snap, context) => {
+    return snap.ref.set(
+      {
+        createdAt: admin.firestore.FieldValue.serverTimestamp()
+      },
+      { merge: true }
+    );
+  });
+
+
 
 export const api = functions.https.onRequest(app)
 

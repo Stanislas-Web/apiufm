@@ -24,6 +24,7 @@ export class PodcastRoute {
                     streamUrl: Podcast.data().streamUrl,
                     duree: Podcast.data().duree,
                     photo: Podcast.data().photo,
+                    description: Podcast.data().description,
                     createdAt: moment(Podcast.data().createdAt.toDate()).fromNow()
                 })
             })
@@ -47,7 +48,9 @@ export class PodcastRoute {
                 NomEmission: Podcast.NomEmission(),
                 StreamUrl: Podcast.StreamUrl(),
                 Duree: Podcast.duree(),
-                Photo: Podcast.photo()
+                Photo: Podcast.photo(),
+                description: Podcast.data().description,
+                createdAt: moment(Podcast.data().createdAt.toDate()).fromNow(),
             });
 
         }catch(err){
@@ -115,6 +118,7 @@ export class PodcastRoute {
                     streamUrl: Podcast.data().streamUrl,
                     duree: Podcast.data().duree,
                     photo: Podcast.data().photo,
+                    description: Podcast.data().description,
                     createdAt: moment(Podcast.data().createdAt.toDate()).fromNow()
                 })
             })
@@ -165,10 +169,11 @@ export class PodcastRoute {
                     streamUrl: Podcast.data().streamUrl,
                     duree: Podcast.data().duree,
                     photo: Podcast.data().photo,
+                    description: Podcast.data().description,
                     createdAt: moment(Podcast.data().createdAt.toDate()).fromNow()
                 })
             })
-            const result :any = voirData.filter((data: { nomEmission: string; }) => data.nomEmission === nameEmission);
+            const result :any = voirData.filter((data: { nomEmission: string; }) => data.nomEmission.includes(nameEmission));
             res.send(result)
 
             

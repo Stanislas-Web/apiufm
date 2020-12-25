@@ -3,7 +3,8 @@ import { db, dateAdmin, functionDate } from '@enironement/db.config';
 
 
 export const Select = (collectionName: string)=>{
-    return db.collection(`${collectionName}`).get();
+    return db.collection(`${collectionName}`)
+    .orderBy("createdAt", "desc").get();
 }
 
 
